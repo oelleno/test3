@@ -203,5 +203,30 @@ function moveFocus() {
   }
 }
 
+function formatPhoneNumber(input) {
+  let value = input.value;
 
+  // If empty or just starting, set to 010-
+  if (!value || value === '') {
+    input.value = '010-';
+    return;
+  }
 
+  // Remove all non-digits
+  value = value.replace(/[^0-9]/g, '');
+
+  // If less than 3 digits, ensure it starts with 010
+  if (value.length <= 3) {
+    value = '010';
+  }
+
+  // Handle both 00000000 and 0000-0000 patterns
+  if (value.length >= 11) {
+    value = value.slice(0, 11); // Limit to 11 digits
+    value = value.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+  } else if (value.length > 3) {
+    value = '010-' + value.slice(3);
+  }
+
+  input.value = value;
+}
