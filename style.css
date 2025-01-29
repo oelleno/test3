@@ -1,3 +1,4 @@
+/* 기본 스타일 설정 */
 * {
   box-sizing: border-box;
 }
@@ -7,122 +8,97 @@ body {
   height: 100vh;
   font-family: "Nunito Sans", sans-serif;
   color: #273444;
+  background-color: #f8f9fa;
+  margin: 0;
 }
 
+/* 컨테이너 */
 .container {
   width: 1000px;
   background-color: white;
   border-radius: 20px;
-  margin: 0 auto;
-  padding: 40px;
+  margin: 20px auto;
+  padding: 25px 40px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* 구분선 */
 hr {
   border: 1px solid orange;
+  margin: 10px 0;
+  /* Added margin for better separation */
 }
 
+/* 헤더 컨테이너 */
+.header-container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+/* 제목 */
 h2 {
-  font-size: 20px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 24px;
   font-weight: bold;
+  text-align: center;
+  margin: 10px 0 1px;
 }
 
+/* 문단 스타일 */
 p {
   font-size: 15px;
   color: #000000;
   font-weight: bold;
-  display: block;
   padding-left: 15px;
-  margin-bottom: 8px;
-  line-height: 1.5;
+  margin-bottom: 0px;
+  line-height: 1.4;
 }
 
+/* 입력 필드 스타일 */
 .thisbox {
-  width: 100%;
+  width: calc(100% - 15px);
   height: 35px;
   border: 1px solid #ccc;
   border-radius: 10px;
-  margin-bottom: 8px;
+  margin-bottom: 1px;
+  /* Reduced margin */
+  margin-left: 15px;
+  padding-left: 10px;
 }
 
-.section-title {
-  display: block;
-  margin-bottom: 8px;
-}
-
-.radio-group,
-.checkbox-group {
-  width: 100%;
-  margin-bottom: 8px;
-}
-
-.ssnbox {
-  float: right;
-}
-
-.ssnbox > input {
-  width: 213px;
-  height: 35px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.ssnbox > input:nth-child(3) {
-  width: 50px;
-  height: 35px;
-  border-radius: 4px;
-  background-color: #0078D7;
-  color: white;
-  font-size: 15px;
-}
-
-.section {
-  padding: 1px 1px;
-  border-bottom: 1px solid #ccc;
-}
-
+/* 회원 정보 입력 그룹 */
 .name-contact {
   display: flex;
   gap: 20px;
+  margin-bottom: 1px;
+  /* Added margin for better separation */
 }
 
-.name-contact > div {
+.name-contact>div {
   flex: 1;
 }
 
+/* 성별 선택 */
 .gender-group {
   flex: 0.5;
 }
 
 .gender-group .radio-group {
-  margin-top: 8px;
+  margin-top: 1px;
+  /* Reduced margin */
 }
 
+/* 생년월일 입력 */
 .birthdate-group {
   flex: 0.8;
 }
 
-.serchbox > input {
-  float: right;
-  width: 350px;
-  height: 35px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 8px;
-}
-
-.serchbox > input:nth-child(3) {
-  width: 100px;
-  height: 35px;
-  margin-right: 8px;
-  background-color: #0078D7;
-  color: white;
-  font-size: 15px;
-}
-
-.address-box {
-  width: 100%;
-}
-
+/* 주소 검색 버튼 */
 .address-search-btn {
   width: 100px;
   height: 35px;
@@ -130,48 +106,123 @@ p {
   color: white;
   border: none;
   border-radius: 4px;
-  margin-top: 8px;
   cursor: pointer;
+  margin-bottom: 1px;
+  /* Added margin for better separation */
 }
 
-.signbox {
-  height: 110px;
-}
-
-.canvas {
-  width: 450px;
-  height: 90px;
-  background-color: transparent;
+/* 운동 목표 체크박스 그룹 스타일 */
+.goal-group {
   border: 1px solid #ccc;
-  border-radius: 15px;
-  box-shadow: 0 4px 6px rgba(50, 50, 255, 0.11), 0 1px 3px rgba(0, 0, 0, 0.068);
+  padding: 10px;
+  border-radius: 5px;
+  margin: 0 15px 10px 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 1px;
+  /* Added margin for better separation */
 }
 
+/* 체크박스 레이블 (다이어트, 근육증가, 체형교정, 재활운동, 기타) */
+.goal-group label {
+  font-size: 14px !important;
+  color: #000000;
+  display: inline-flex;
+  align-items: center;
+  gap: 0px;
+  margin-bottom: 1px;
+  /* Reduced margin */
+}
+
+/* 기타 입력창 */
+.goal-group input[type="text"] {
+  width: 150px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 1px;
+  /* Reduced margin */
+}
+
+/* 운동 시간 선택 */
+.time-input {
+  width: 100px;
+  height: 25px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 0 5px;
+  margin-left: 5px;
+  margin-bottom: 1px;
+  /* Added margin for better separation */
+}
+
+/* 회원 가입 버튼 */
 .submitBtn {
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 130px;
-  height: 50px;
+  height: 40px;
   background-color: #0078D7;
   color: white;
   font-size: 18px;
   border: none;
   border-radius: 8px;
-  margin: 0 auto;
+  margin: -80px auto 20px auto;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.section > label {
-  margin-right: 15px;
-  line-height: 1.5;
-  font-size: 16px;
-  color: #000000;
-  display: inline-block;
+.submitBtn:hover {
+  background-color: #005bb5;
 }
 
+/* 회원권 시작일 선택 */
+.sign-date {
+  text-align: center;
+  margin: 1px 0;
+  /* Reduced margin */
+}
+
+/* 날짜 선택 스타일 */
+.sign-date select {
+  width: 60px;
+  text-align: center;
+  margin: 0 5px;
+  padding: 2px;
+  border: none;
+  border-bottom: 1px solid #000;
+  background: transparent;
+  appearance: none;
+  margin-bottom: 1px;
+  /* Reduced margin */
+}
+
+/* 서명 박스 */
+.signbox {
+  height: 110px;
+}
+
+/* 서명 캔버스 */
+.canvas {
+  width: 180px;
+  height: 50px;
+  background-color: transparent;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(50, 50, 255, 0.11), 0 1px 3px rgba(0, 0, 0, 0.068);
+  float: right;
+  position: relative;
+  top: -40px;
+}
+
+/* 이용 약관 스타일 */
 .terms {
   font-size: 12px;
   font-weight: lighter;
-  margin-bottom: 15px;
+  margin-bottom: 1px;
+  /* Reduced margin */
   line-height: 1.5;
 }
 
@@ -182,11 +233,12 @@ p {
   margin-left: -12px;
 }
 
-.time-input {
-  width: 100px;
-  height: 25px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 0 5px;
-  margin-left: 5px;
+.section {
+  margin-bottom: 1px;
+  /* Minimum margin */
+}
+
+.section>div {
+  margin-bottom: 1px;
+  /* Minimum margin for inner divs */
 }
