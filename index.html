@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>회원 가입</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="./js/regist.js"></script>
   <link rel="stylesheet" href="./style.css">
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -79,12 +80,35 @@
       font-weight: lighter;
       /* 글씨 가늘게 */
     }
+    .section {
+      margin-bottom: 5px; /* Reduced margin */
+    }
+    .section > div {
+        margin-bottom: 5px; /* Reduced margin for inner divs */
+    }
   </style>
 </head>
 
 <body>
   <div class="container">
-    <h2 style="text-align: center;">회원가입계약서</h2>
+    <div class="header-container">
+      <div style="display: flex; align-items: center;">
+        <img src="./attached_assets/BDST.png" alt="Logo" style="height: 50px; margin-right: 20px;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-left: 30px;">
+          <i class="fas fa-building" style="font-size: 20px;"></i>
+          <select name="branch" id="branch" class="thisbox" style="width: 120px; height: 30px;">
+            <option value="">지점 선택</option>
+            <option value="용문가장점">용문가장점</option>
+            <option value="관저점">관저점</option>
+          </select>
+        </div>
+      </div>
+      <h2 style="text-align: center; flex: 1;">회원가입계약서<br><span style="font-size: 14px; font-weight: bold; display: block; width: 100%;">Membership Agreement</span></h2>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <p style="padding-left: 0px;"><i class="fas fa-user-tie" style="margin-right: 5px;"></i>계약담당</p>
+        <input type="text" name="contract_manager" class="thisbox" style="width: 120px; height: 30px;">
+      </div>
+    </div>
     <hr>
     <form id="regform">
 
@@ -92,122 +116,191 @@
 
       <div class="section name-contact">
         <div>
-          <p>이름</p>
+          <p><i class="fas fa-user" style="margin-right: 5px;"></i>이름</p>
           <input type="text" name="userid" id="userid" maxlength="20" class="thisbox">
         </div>
         <div>
-          <p>연락처</p>
+          <p><i class="fas fa-phone" style="margin-right: 5px;"></i>연락처</p>
           <input type="text" name="contact" id="contact" maxlength="20" class="thisbox" placeholder="000-0000-0000">
         </div>
         <div class="gender-group">
-          <p>성별</p>
-          <div class="radio-group">
-            <label><input type="radio" name="gender" value="여자"> 여자</label>
-            <label><input type="radio" name="gender" value="남자"> 남자</label>
+          <p><i class="fas fa-venus-mars" style="margin-right: 5px;"></i>성별</p>
+          <div class="radio-group" style="padding: 5px 10px; border: 1px solid #ccc; border-radius: 10px; margin: 0 15px 10px 15px; height: 35px; display: flex; align-items: center;">
+            <label style="font-size: 14px;"><input type="radio" name="gender" value="여자"> 여자</label>
+            <label style="font-size: 14px;"><input type="radio" name="gender" value="남자"> 남자</label>
           </div>
         </div>
         <div class="birthdate-group">
-          <p>생년월일</p>
+          <p><i class="fas fa-calendar-alt" style="margin-right: 5px;"></i>생년월일</p>
           <input type="text" name="userpw_re" id="userpw_re" maxlength="10" class="thisbox"
             oninput="formatBirthdate(this)" placeholder="예: 901010 또는 19901010">
         </div>
       </div>
 
-      <div class="section" style="display: flex; gap: 20px;">
+      <div class="section" style="display: flex; gap: 10px;">
         <div style="flex: 1;">
-          <p>주소</p>
-          <div style="display: flex; gap: 10px;">
-            <input type="text" name="address" id="sample6_address" class="thisbox" readonly>
-            <input type="button" value="주소 검색" onclick="sample6_execDaumPostcode()" class="address-search-btn">
+          <p><i class="fas fa-map-marker-alt" style="margin-right: 5px;"></i>주소</p>
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <input type="text" name="address" id="sample6_address" class="thisbox" style="margin-bottom: 0;" readonly>
+            <input type="button" value="주소 검색" onclick="sample6_execDaumPostcode()" class="address-search-btn"
+              style="margin-top: 0;">
           </div>
         </div>
         <div style="flex: 1;">
-          <p>회원권 선택</p>
-          <select name="membership" id="membership" class="thisbox">
-            <option value="New">New</option>
-            <option value="Renew">Renew</option>
-            <option value="Upgrade">Upgrade</option>
-          </select>
+          <p><i class="fas fa-id-card" style="margin-right: 5px;"></i>회원권</p>
+          <div style="display: flex; gap: 10px;">
+            <select name="membership" id="membership" class="thisbox" style="width: 50%;">
+              <option value="New">New</option>
+              <option value="Renew">Renew</option>
+              <option value="Upgrade">Upgrade</option>
+            </select>
+            <input type="number" name="membership_months" id="membership_months" class="thisbox" style="width: 50%;" placeholder="개월" min="1">
+          </div>
         </div>
       </div>
 
-      <div class="section" style="display: flex; gap: 20px;">
+      <div class="section" style="display: flex; gap: 10px;">
         <div style="flex: 0.5;">
-          <p>운동복 대여</p>
+          <p><i class="fas fa-tshirt" style="margin-right: 5px;"></i>운동복 대여</p>
           <input type="number" name="rental_months" id="rental_months" class="thisbox" min="1" placeholder="개월">
         </div>
         <div style="flex: 0.5;">
-          <p>라커 대여</p>
+          <p><i class="fas fa-box" style="margin-right: 5px;"></i>라커 대여</p>
           <input type="number" name="locker_months" id="locker_months" class="thisbox" min="0" placeholder="개월">
         </div>
         <div style="flex: 1;">
-          <p>기간회비</p>
-          <input type="text" name="period_fee" id="period_fee" class="thisbox" placeholder="금액 입력 (₩)" oninput="formatCurrency(this)">
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <div style="flex: 1;">
+              <p style="display: inline-block;"><i class="fas fa-won-sign" style="margin-right: 5px;"></i>기간회비</p>
+              <span style="margin-left: 10px; font-size: 14px;">가입비</span>
+              <input type="text" name="admission_fee" id="admission_fee" class="thisbox"
+                style="width: 150px; height: 30px; display: inline-block; margin-left: 5px;" placeholder="금액 입력 (₩)"
+                oninput="formatCurrency(this)">
+            </div>
+          </div>
+          <input type="text" name="period_fee" id="period_fee" class="thisbox" placeholder="금액 입력 (₩)"
+            oninput="formatCurrency(this)">
         </div>
       </div>
 
-      <div class="section" style="display: flex; gap: 20px;">
+      <div class="section" style="display: flex; gap: 10px;">
         <div style="flex: 1;">
-          <p>운동목적</p>
-          <label><input type="checkbox" name="goal" value="다이어트"> 다이어트</label>
-          <label><input type="checkbox" name="goal" value="근육증가"> 근육증가</label>
-          <label><input type="checkbox" name="goal" value="체형교정"> 체형교정</label>
-          <label><input type="checkbox" name="goal" value="재활운동"> 재활운동</label>
-          <div style="margin-top: 10px;">
-            <input type="text" name="other" id="other" class="thisbox" placeholder="기타">
+          <p><i class="fas fa-bullseye" style="margin-right: 5px;"></i>운동목적</p>
+          <div class="goal-group" style="border: 1px solid #ccc; padding: 10px; border-radius: 10px; margin: 0 15px 10px 15px;">
+            <label><input type="checkbox" name="goal" value="다이어트"> 다이어트</label>
+            <label><input type="checkbox" name="goal" value="근육증가"> 근육증가</label>
+            <label><input type="checkbox" name="goal" value="체형교정"> 체형교정</label>
+            <label><input type="checkbox" name="goal" value="재활운동"> 재활운동</label>
+            <div style="margin-top: 5px; display: flex; align-items: center; gap: 5px;">
+            <label style="min-width: 55px; font-size: 14px;"><input type="checkbox" name="goal" value="기타"> 기타</label>
+            <input type="text" name="other" id="other" class="thisbox" style="margin-bottom: 0; width: 200px; height: 25px;"
+              placeholder="기타 입력">
+            </div>
           </div>
-          <p style="margin-top: 15px;">운동시간</p>
-          <div style="display: flex; gap: 10px; align-items: center;">
-            <label style="display: flex; align-items: center; gap: 5px;">
-              <input type="checkbox" name="workout_time" value="오전">
-              오전 <input type="time" class="time-input" name="morning_time">
-            </label>
-            <label style="display: flex; align-items: center; gap: 5px;">
-              <input type="checkbox" name="workout_time" value="오후">
-              오후 <input type="time" class="time-input" name="afternoon_time">
-            </label>
+          <p style="margin-top: 15px;"><i class="fas fa-clock" style="margin-right: 5px;"></i>운동시간</p>
+          <div style="border: 1px solid #ccc; padding: 10px; border-radius: 10px; margin: 0 15px 10px 15px;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+              <label style="display: flex; align-items: center; gap: 5px; font-size: 14px;">
+                <input type="checkbox" name="workout_time" value="오전">
+                오전
+                <select name="morning_hour" class="time-input">
+                  <option value="">시간 선택</option>
+                  <option value="1">1시</option>
+                  <option value="2">2시</option>
+                  <option value="3">3시</option>
+                  <option value="4">4시</option>
+                  <option value="5">5시</option>
+                  <option value="6">6시</option>
+                  <option value="7">7시</option>
+                  <option value="8">8시</option>
+                  <option value="9">9시</option>
+                  <option value="10">10시</option>
+                  <option value="11">11시</option>
+                  <option value="12">12시</option>
+                </select>
+              </label>
+              <label style="display: flex; align-items: center; gap: 5px; font-size: 14px;">
+                <input type="checkbox" name="workout_time" value="오후">
+                오후
+                <select name="afternoon_hour" class="time-input">
+                  <option value="">시간 선택</option>
+                  <option value="1">1시</option>
+                  <option value="2">2시</option>
+                  <option value="3">3시</option>
+                  <option value="4">4시</option>
+                  <option value="5">5시</option>
+                  <option value="6">6시</option>
+                  <option value="7">7시</option>
+                  <option value="8">8시</option>
+                  <option value="9">9시</option>
+                  <option value="10">10시</option>
+                  <option value="11">11시</option>
+                  <option value="12">12시</option>
+                </select>
+              </label>
+            </div>
           </div>
         </div>
         <div style="flex: 1;">
           <div style="display: flex; align-items: center;">
-            <p style="margin-right: 20px;">결제 방법</p>
+            <p style="margin-right: 20px;"><i class="fas fa-calculator" style="margin-right: 5px;"></i>합계</p>
             <div>
-              <label style="margin-right: 10px;"><input type="checkbox" name="payment" value="카드"> 카드</label>
-              <label style="margin-right: 10px;"><input type="checkbox" name="payment" value="현금"> 현금</label>
-              <label><input type="checkbox" name="payment" value="계좌이체"> 계좌이체</label>
+              <label style="margin-right: 10px; font-size: 14px;"><input type="checkbox" name="payment" value="카드"> 카드</label>
+              <label style="margin-right: 10px; font-size: 14px;"><input type="checkbox" name="payment" value="현금"> 현금</label>
+              <label style="font-size: 14px;"><input type="checkbox" name="payment" value="계좌이체"> 계좌이체</label>
             </div>
           </div>
-          <input type="text" name="total_amount" id="total_amount" class="thisbox" style="margin-top: 10px;"
-            placeholder="금액 입력 (₩)" oninput="formatCurrency(this)">
-          <p style="margin-top: 15px;">회원권 시작일</p>
+          <input type="text" name="total_amount" id="total_amount" class="thisbox"
+            style="margin-top: 10px; margin-bottom: 0px;" placeholder="금액 입력 (₩)" oninput="formatCurrency(this)">
+          <div style="margin-top: 1px; font-size: 13px; padding-left: 15px;">
+            <span style="margin-right: 10px;">현금영수증 여부:</span>
+            <label style="margin-right: 10px; font-size: 12px;"><input type="radio" name="cash_receipt" value="O"> O</label>
+            <label style="margin-right: 10px; font-size: 12px;"><input type="radio" name="cash_receipt" value="X"> X</label>
+            <input type="text" name="receipt_phone" class="thisbox"
+              style="width: 150px; height: 25px; display: inline-block;" placeholder="전화번호 입력">
+          </div>
+          <p style="margin-top: 15px;"><i class="fas fa-calendar-plus" style="margin-right: 5px;"></i>회원권 시작일</p>
           <input type="date" name="membership_start_date" id="membership_start_date" class="thisbox">
+          <script>
+            document.getElementById('membership_start_date').valueAsDate = new Date();
+          </script>
         </div>
       </div>
 
       <div class="section">
-        <p>가입경로</p>
-        <div style="display: flex; align-items: center; gap: 15px; flex-wrap: nowrap;">
-          <label style="font-size: 14px;"><input type="checkbox" name="referral" value="간판"> 간판</label>
-          <label style="font-size: 14px;"><input type="checkbox" name="referral" value="전단지"> 전단지</label>
-          <div style="display: flex; align-items: center; gap: 5px;">
-            <label style="font-size: 14px;"><input type="checkbox" name="referral" value="SNS"> SNS</label>
-            <input type="text" name="sns_detail" id="snsField" class="thisbox" style="width: 120px; height: 30px;" placeholder="SNS 채널명">
+        <p><i class="fas fa-route" style="margin-right: 5px;"></i>가입경로</p>
+        <div style="border: 1px solid #ccc; padding: 5px 10px; border-radius: 10px; margin: 0 15px 10px 15px;">
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: nowrap;">
+          <label style="font-size: 14px; white-space: nowrap;"><input type="checkbox" name="referral" value="간판">
+            간판</label>
+          <label style="font-size: 14px; white-space: nowrap;"><input type="checkbox" name="referral" value="전단지">
+            전단지</label>
+          <div style="display: flex; align-items: center; gap: 3px;">
+            <label style="font-size: 14px; white-space: nowrap;"><input type="checkbox" name="referral" value="SNS">
+              SNS</label>
+            <input type="text" name="sns_detail" id="snsField" class="thisbox" style="width: 90px; height: 30px;"
+              placeholder="SNS 채널명">
           </div>
-          <div style="display: flex; align-items: center; gap: 5px;">
-            <label style="font-size: 14px;"><input type="checkbox" name="referral" value="인터넷검색"> 인터넷검색</label>
-            <input type="text" name="internet_detail" class="thisbox" style="width: 120px; height: 30px;" placeholder="검색 사이트명">
+          <div style="display: flex; align-items: center; gap: 3px;">
+            <label style="font-size: 14px; white-space: nowrap;"><input type="checkbox" name="referral" value="인터넷검색">
+              인터넷검색</label>
+            <input type="text" name="internet_detail" class="thisbox" style="width: 110px; height: 30px;"
+              placeholder="검색 사이트명">
           </div>
-          <div style="display: flex; align-items: center; gap: 5px;">
-            <label style="font-size: 14px;"><input type="checkbox" name="referral" value="지인추천"> 지인추천</label>
-            <input type="text" name="referral_name" class="thisbox" style="width: 100px; height: 30px;" placeholder="추천인 이름">
-            <input type="text" name="referral_phone" class="thisbox" style="width: 120px; height: 30px;" placeholder="추천인 연락처">
+          <div style="display: flex; align-items: center; gap: 3px;">
+            <label style="font-size: 14px; white-space: nowrap;"><input type="checkbox" name="referral" value="지인추천">
+              지인추천</label>
+            <input type="text" name="referral_name" class="thisbox" style="width: 90px; height: 30px;"
+              placeholder="추천인 이름">
+            <input type="text" name="referral_phone" class="thisbox" style="width: 110px; height: 30px;"
+              placeholder="추천인 연락처">
+          </div>
           </div>
         </div>
       </div>
 
       <!-- 약관 내용 추가 -->
       <div class="section terms-section">
-        <h3>약관 내용</h3>
         <p class="terms"><strong>1.회원권 휴회</strong> <br>
           6개월 1회, 12개월 2회 가능하고, 연기 신청서를 작성시 인정됩니다. 회당 최대 30일까지 휴회가 가능하고, 락카기간은 정지가 불가합니다.<br>군복무, 임신 등 센터가 인정하는 사유로 장기간
           이용할 수 없는 경우에는 센터에서 정한 양식을 작성하고 관계 증빙서류를 첨부 제출하여 휴회할 수 있습니다.<br>
@@ -232,27 +325,37 @@
           <strong>8.운동 중 상해 발생</strong> <br>
           트레이너 동반 없이 개인 운동 중 상해가 발생하게 되는 경우, 본 센터는 책임지지 않습니다.<br>
           <strong>9.지점이용</strong> <br>
-          등록한 지점 외 다른 지점은 월 5회 이용 가능합니다.
+          등록한 지점 외 다른 지점은 월 5회 이용 가능합니다.<br>
+          <hr style="border: 0; border-top: 1px solid #ccc; margin: 10px 0;">
         </p>
       </div>
 
-      <div class="section terms-section" style="border-bottom: 1px solid #ccc; display: flex; gap: 20px;">
+      <div class="section terms-section" style="border-bottom: 1px solid #ccc; display: flex; gap: 10px;">
         <div style="flex: 1;">
-          <p class="terms"><strong>24시 이용안내</strong><br>
-            1. 야간 서비스는 만 19세 이상부터 이용 가능합니다.<br>
+          <p class="terms" style="margin-bottom: 2px;"><strong>24시 이용안내</strong></p>
+          <hr style="margin: 5px 0;">
+          <p class="terms">1. 야간 서비스는 만 19세 이상부터 이용 가능합니다.<br>
             2. 음주시 센터 이용과 센터 내 음주는 불가합니다.<br>
             3. 클럽 회원은 회원 등록이 안된 게스트와 함께 입장할 수 없습니다.<br>
             4. 24시간 CCTV가 작동중이며 시설 내의 모든 활동을 365일 기록합니다.<br>
             5. 타인의 출입을 위해 임의로 문을 여는 것은 금지됩니다.<br>
             6. 응급 처치 키트는 입구 근처 프론트 데스크 비치되어 있습니다.<br>
             7. 휴일 및 공휴일에는 운동복 및 수건이 지급되지 않을 수 있습니다.<br>
-            8. 형법 제319조에 의거 무단출입 또는 타인의 무단출입을 도와줄 경우, 최대 500만원의 벌금에 처할 수 있습니다.</p>
+            8. 형법 제319조에 의거 무단출입 또는 타인의 무단출입을 도와줄 경우,<br>&nbsp;&nbsp;&nbsp;&nbsp;최대 500만원의 벌금에 처할 수 있습니다.<br>
+            <hr style="border: 0; border-top: 1px solid #ccc; margin: 10px 0;">
+            <strong style="font-size: 14px;">● 모든 사용자는 항상 클럽 내 규칙 및 표준에 따라야 합니다.<br>
+              위 규칙 위반 시 회원권 권한이 상실될 수 있습니다.</strong>
+          </p>
         </div>
         <div style="flex: 1;">
-          <p class="terms"><strong>환불안내</strong><br>
-            1. 이용 개시일 전에는 위약금 10%가 공제됩니다.<br>
+          <p class="terms" style="margin-bottom: 2px;"><strong>환불안내</strong></p>
+          <hr style="margin: 5px 0;">
+          <p class="terms"
+            style="margin-bottom: 15px; border: 2px solid #ccc; padding: 8px; display: inline-block; width: 450px;">회원권
+            1일 5,000원 | 무료PT 50,000원 | GX 30,000원</p>
+          <p class="terms">1. 이용 개시일 전에는 위약금 10%가 공제됩니다.<br>
             2. 이용 개시일 후에는 위약금 10% + 소요기간 정상가격이 공제됩니다.<br>
-            3. 가입시 서비스로 제공되는 기간, 시설, 레슨, 사은품 등은 환불 요청시 상품가치 에 해당하는 금액이 공제됩니다.<br>
+            3. 가입시 서비스로 제공되는 기간, 시설, 레슨, 사은품 등은 환불 요청시<br>&nbsp;&nbsp;&nbsp;&nbsp;상품가치에 해당하는 금액이 공제됩니다.<br>
             4. 가입비는 환불되지 않습니다.<br>
             5. 해지시 개인적인 사정에 의해 연기된 기간은 이용 기간에 포함됩니다.<br>
             6. 무료PT의 경우 일방적인 수업 취소시에도 금액이 공제됩니다.<br>
@@ -261,11 +364,59 @@
       </div>
 
       <div class="section signbox">
-        <p>서명</p>
-        <canvas id="jsCanvas" class="canvas thisbox"></canvas>
+        <p style="font-weight: bold; font-size: 14px;">본인은 위 계약내용을 모두 이해 하였고, 이에 동의하였습니다. 또한 본인 자필로 서명한 회원가입계약서 사본을 교부
+          받았음을 인정합니다.
+
+            <div class="sign-date">
+              <p><select class="year" id="yearInput"></select> 년 
+                 <select class="month" id="monthInput"></select> 월 
+                 <select class="day" id="dayInput"></select> 일</p>
+            </div>
+            <div>
+              <p style="margin: -30px 200px 5px 0; text-align: right;">신청인</p>
+              <canvas id="jsCanvas" class="canvas thisbox" style="margin: 0;"></canvas>
+            </div>
+          </div>
+        </div>
         <script src="./canvas.js"></script>
       </div>
+      <script>
+        // Set today's date and populate select boxes
+        const today = new Date();
+        const yearSelect = document.getElementById('yearInput');
+        const monthSelect = document.getElementById('monthInput');
+        const daySelect = document.getElementById('dayInput');
 
+        // Populate year select (current year to 2025)
+        const currentYear = today.getFullYear();
+        for (let year = currentYear; year <= 2025; year++) {
+          const option = document.createElement('option');
+          option.value = year.toString();
+          option.text = year.toString();
+          yearSelect.appendChild(option);
+        }
+
+        // Populate month select (1-12)
+        for (let i = 1; i <= 12; i++) {
+          const option = document.createElement('option');
+          option.value = i.toString().padStart(2, '0');
+          option.text = i.toString().padStart(2, '0');
+          monthSelect.appendChild(option);
+        }
+
+        // Populate day select (1-31)
+        for (let i = 1; i <= 31; i++) {
+          const option = document.createElement('option');
+          option.value = i.toString().padStart(2, '0');
+          option.text = i.toString().padStart(2, '0');
+          daySelect.appendChild(option);
+        }
+
+        // Set default values to today
+        yearSelect.value = today.getFullYear().toString();
+        monthSelect.value = (today.getMonth() + 1).toString().padStart(2, '0');
+        daySelect.value = today.getDate().toString().padStart(2, '0');
+      </script>
       <p><button type="button" onclick="downloadAsImage()" class="submitBtn">가입완료</button></p>
     </form>
   </div>
