@@ -72,6 +72,27 @@
     function toggleReferralFields() {
       //  This function likely exists elsewhere in regist.js to handle other referral fields.  Leaving as is.
     }
+
+    // Add event listeners for dictation overlays
+    document.addEventListener('DOMContentLoaded', function() {
+      const dictationTexts = document.querySelectorAll('.dictation-text');
+      dictationTexts.forEach(text => {
+        text.addEventListener('click', function() {
+          const canvasId = this.dataset.canvas;
+          const overlayId = 'overlay' + canvasId.slice(-1);
+          document.getElementById(overlayId).style.display = 'block';
+          initDictationCanvas(canvasId);
+        });
+      });
+
+      // Close button functionality
+      const closeButtons = document.querySelectorAll('.close-btn');
+      closeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          this.parentElement.style.display = 'none';
+        });
+      });
+    });
   </script>
   <style>
     .terms {
@@ -80,11 +101,37 @@
       font-weight: lighter;
       /* 글씨 가늘게 */
     }
+
     .section {
-      margin-bottom: 5px; /* Reduced margin */
+      margin-bottom: 5px;
+      /* Reduced margin */
     }
-    .section > div {
-        margin-bottom: 5px; /* Reduced margin for inner divs */
+
+    .section>div {
+      margin-bottom: 5px;
+      /* Reduced margin for inner divs */
+    }
+
+    .dictation-overlay {
+      position: absolute;
+      background-color: rgba(255, 255, 255, 0.8);
+      border: 1px solid #ccc;
+      padding: 10px;
+      display: none; /* Initially hidden */
+      z-index: 10; /* Ensure it's on top */
+    }
+
+    .dictation-canvas {
+      width: 200px;
+      height: 100px;
+      border: 1px solid #ccc;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -103,7 +150,8 @@
           </select>
         </div>
       </div>
-      <h2 style="text-align: center; flex: 1;">회원가입계약서<br><span style="font-size: 14px; font-weight: bold; display: block; width: 100%;">Membership Agreement</span></h2>
+      <h2 style="text-align: center; flex: 1;">회원가입계약서<br><span
+          style="font-size: 14px; font-weight: bold; display: block; width: 100%;">Membership Agreement</span></h2>
       <div style="display: flex; align-items: center; gap: 10px;">
         <p style="padding-left: 0px;"><i class="fas fa-user-tie" style="margin-right: 5px;"></i>계약담당</p>
         <input type="text" name="contract_manager" class="thisbox" style="width: 120px; height: 30px;">
@@ -114,7 +162,7 @@
 
       <input type="hidden" name="isssn" id="isssn" value="n">
 
-      <div class="section name-contact">
+      <div class="section name-contact" style="margin-bottom: -5px;">
         <div>
           <p><i class="fas fa-user" style="margin-right: 5px;"></i>이름</p>
           <input type="text" name="userid" id="userid" maxlength="20" class="thisbox">
@@ -125,7 +173,8 @@
         </div>
         <div class="gender-group">
           <p><i class="fas fa-venus-mars" style="margin-right: 5px;"></i>성별</p>
-          <div class="radio-group" style="padding: 5px 10px; border: 1px solid #ccc; border-radius: 10px; margin: 0 15px 10px 15px; height: 35px; display: flex; align-items: center;">
+          <div class="radio-group"
+            style="padding: 5px 10px; border: 1px solid #ccc; border-radius: 10px; margin: 0 15px 5px 15px; height: 35px; display: flex; align-items: center;">
             <label style="font-size: 14px;"><input type="radio" name="gender" value="여자"> 여자</label>
             <label style="font-size: 14px;"><input type="radio" name="gender" value="남자"> 남자</label>
           </div>
@@ -143,7 +192,7 @@
           <div style="display: flex; gap: 10px; align-items: center;">
             <input type="text" name="address" id="sample6_address" class="thisbox" style="margin-bottom: 0;" readonly>
             <input type="button" value="주소 검색" onclick="sample6_execDaumPostcode()" class="address-search-btn"
-              style="margin-top: 0;">
+              style="margin-top: 0; border-radius: 10px;">
           </div>
         </div>
         <div style="flex: 1;">
@@ -154,7 +203,8 @@
               <option value="Renew">Renew</option>
               <option value="Upgrade">Upgrade</option>
             </select>
-            <input type="number" name="membership_months" id="membership_months" class="thisbox" style="width: 50%;" placeholder="개월" min="1">
+            <input type="number" name="membership_months" id="membership_months" class="thisbox" style="width: 50%;"
+              placeholder="개월" min="1">
           </div>
         </div>
       </div>
@@ -173,14 +223,12 @@
             <div style="flex: 1;">
               <p style="display: inline-block;"><i class="fas fa-won-sign" style="margin-right: 5px;"></i>가입비</p>
               <input type="text" name="admission_fee" id="admission_fee" class="thisbox"
-                style="width: 100%; height: 30px;" placeholder="금액 입력 (₩)"
-                oninput="formatCurrency(this)">
+                style="width: 100%; height: 30px;" placeholder="금액 입력 (₩)" oninput="formatCurrency(this)">
             </div>
             <div style="flex: 1;">
               <p style="display: inline-block;"><i class="fas fa-won-sign" style="margin-right: 5px;"></i>기간회비</p>
-              <input type="text" name="period_fee" id="period_fee" class="thisbox"
-                style="width: 100%; height: 30px;" placeholder="금액 입력 (₩)"
-                oninput="formatCurrency(this)">
+              <input type="text" name="period_fee" id="period_fee" class="thisbox" style="width: 100%; height: 30px;"
+                placeholder="금액 입력 (₩)" oninput="formatCurrency(this)">
             </div>
           </div>
         </div>
@@ -189,15 +237,16 @@
       <div class="section" style="display: flex; gap: 10px;">
         <div style="flex: 1;">
           <p><i class="fas fa-bullseye" style="margin-right: 5px;"></i>운동목적</p>
-          <div class="goal-group" style="border: 1px solid #ccc; padding: 10px; border-radius: 10px; margin: 0 15px 10px 15px;">
+          <div class="goal-group"
+            style="border: 1px solid #ccc; padding: 10px; border-radius: 10px; margin: 0 15px 10px 15px;">
             <label><input type="checkbox" name="goal" value="다이어트"> 다이어트</label>
             <label><input type="checkbox" name="goal" value="근육증가"> 근육증가</label>
             <label><input type="checkbox" name="goal" value="체형교정"> 체형교정</label>
             <label><input type="checkbox" name="goal" value="재활운동"> 재활운동</label>
             <div style="margin-top: 5px; display: flex; align-items: center; gap: 5px;">
-            <label style="min-width: 55px; font-size: 14px;"><input type="checkbox" name="goal" value="기타"> 기타</label>
-            <input type="text" name="other" id="other" class="thisbox" style="margin-bottom: 0; width: 200px; height: 25px;"
-              placeholder="기타 입력">
+              <label style="min-width: 55px; font-size: 14px;"><input type="checkbox" name="goal" value="기타"> 기타</label>
+              <input type="text" name="other" id="other" class="thisbox"
+                style="margin-bottom: 0; width: 200px; height: 25px;" placeholder="기타 입력">
             </div>
           </div>
           <p style="margin-top: 15px;"><i class="fas fa-clock" style="margin-right: 5px;"></i>운동시간</p>
@@ -245,7 +294,7 @@
           </div>
         </div>
         <div style="flex: 1;">
-          <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
             <p style="margin: 0;"><i class="fas fa-calculator" style="margin-right: 5px;"></i>합계</p>
             <div style="display: flex; gap: 15px;">
               <label style="font-size: 14px;"><input type="checkbox" name="payment" value="카드"> 카드</label>
@@ -257,12 +306,14 @@
             style="margin-top: 10px; margin-bottom: 0px;" placeholder="금액 입력 (₩)" oninput="formatCurrency(this)">
           <div style="margin-top: 1px; font-size: 13px; padding-left: 15px;">
             <span style="margin-right: 10px;">현금영수증 여부:</span>
-            <label style="margin-right: 10px; font-size: 12px;"><input type="radio" name="cash_receipt" value="O"> O</label>
-            <label style="margin-right: 10px; font-size: 12px;"><input type="radio" name="cash_receipt" value="X"> X</label>
+            <label style="margin-right: 10px; font-size: 12px;"><input type="radio" name="cash_receipt" value="O">
+              O</label>
+            <label style="margin-right: 10px; font-size: 12px;"><input type="radio" name="cash_receipt" value="X">
+              X</label>
             <input type="text" name="receipt_phone" class="thisbox"
               style="width: 150px; height: 25px; display: inline-block;" placeholder="전화번호 입력">
           </div>
-          <p style="margin-top: 15px;"><i class="fas fa-calendar-plus" style="margin-right: 5px;"></i>회원권 시작일</p>
+          <p style="margin-top: 35px;"><i class="fas fa-calendar-plus" style="margin-right: 5px;"></i>회원권 시작일</p>
           <input type="date" name="membership_start_date" id="membership_start_date" class="thisbox">
           <script>
             document.getElementById('membership_start_date').valueAsDate = new Date();
@@ -270,34 +321,34 @@
         </div>
       </div>
 
-      <div class="section">
+      <div class="section" style="margin-top: -20px;">
         <p><i class="fas fa-route" style="margin-right: 5px;"></i>가입경로</p>
         <div style="border: 1px solid #ccc; padding: 5px 10px; border-radius: 10px; margin: 0 15px 10px 15px;">
           <div style="display: flex; align-items: center; gap: 8px; flex-wrap: nowrap;">
-          <label style="font-size: 14px; white-space: nowrap;"><input type="checkbox" name="referral" value="간판">
-            간판</label>
-          <label style="font-size: 14px; white-space: nowrap;"><input type="checkbox" name="referral" value="전단지">
-            전단지</label>
-          <div style="display: flex; align-items: center; gap: 3px;">
-            <label style="font-size: 14px; white-space: nowrap;"><input type="checkbox" name="referral" value="SNS">
-              SNS</label>
-            <input type="text" name="sns_detail" id="snsField" class="thisbox" style="width: 90px; height: 30px;"
-              placeholder="SNS 채널명">
-          </div>
-          <div style="display: flex; align-items: center; gap: 3px;">
-            <label style="font-size: 14px; white-space: nowrap;"><input type="checkbox" name="referral" value="인터넷검색">
-              인터넷검색</label>
-            <input type="text" name="internet_detail" class="thisbox" style="width: 110px; height: 30px;"
-              placeholder="검색 사이트명">
-          </div>
-          <div style="display: flex; align-items: center; gap: 3px;">
-            <label style="font-size: 14px; white-space: nowrap;"><input type="checkbox" name="referral" value="지인추천">
-              지인추천</label>
-            <input type="text" name="referral_name" class="thisbox" style="width: 90px; height: 30px;"
-              placeholder="추천인 이름">
-            <input type="text" name="referral_phone" class="thisbox" style="width: 110px; height: 30px;"
-              placeholder="추천인 연락처">
-          </div>
+            <label style="font-size: 14px; white-space: nowrap;"><input type="checkbox" name="referral" value="간판">
+              간판</label>
+            <label style="font-size: 14px; white-space: nowrap;"><input type="checkbox" name="referral" value="전단지">
+              전단지</label>
+            <div style="display: flex; align-items: center; gap: 3px;">
+              <label style="font-size: 14px; white-space: nowrap;"><input type="checkbox" name="referral" value="SNS">
+                SNS</label>
+              <input type="text" name="sns_detail" id="snsField" class="thisbox" style="width: 90px; height: 30px;"
+                placeholder="SNS 채널명">
+            </div>
+            <div style="display: flex; align-items: center; gap: 3px;">
+              <label style="font-size: 14px; white-space: nowrap;"><input type="checkbox" name="referral" value="인터넷검색">
+                인터넷검색</label>
+              <input type="text" name="internet_detail" class="thisbox" style="width: 110px; height: 30px;"
+                placeholder="검색 사이트명">
+            </div>
+            <div style="display: flex; align-items: center; gap: 3px;">
+              <label style="font-size: 14px; white-space: nowrap;"><input type="checkbox" name="referral" value="지인추천">
+                지인추천</label>
+              <input type="text" name="referral_name" class="thisbox" style="width: 90px; height: 30px;"
+                placeholder="추천인 이름">
+              <input type="text" name="referral_phone" class="thisbox" style="width: 110px; height: 30px;"
+                placeholder="추천인 연락처">
+            </div>
           </div>
         </div>
       </div>
@@ -333,7 +384,7 @@
         </p>
       </div>
 
-      <div class="section terms-section" style="border-bottom: 1px solid #ccc; display: flex; gap: 10px;">
+      <div class="section terms-section" style="border-bottom: 1px solid #ccc; display: flex; gap: 10px; margin-top: -15px;">
         <div style="flex: 1;">
           <p class="terms" style="margin-bottom: 2px;"><strong>24시 이용안내</strong></p>
           <hr style="margin: 5px 0;">
@@ -346,16 +397,21 @@
             7. 휴일 및 공휴일에는 운동복 및 수건이 지급되지 않을 수 있습니다.<br>
             8. 형법 제319조에 의거 무단출입 또는 타인의 무단출입을 도와줄 경우,<br>&nbsp;&nbsp;&nbsp;&nbsp;최대 500만원의 벌금에 처할 수 있습니다.<br>
             <hr style="border: 0; border-top: 1px solid #ccc; margin: 10px 0;">
-            <strong style="font-size: 14px;">● 모든 사용자는 항상 클럽 내 규칙 및 표준에 따라야 합니다.<br>
-              위 규칙 위반 시 회원권 권한이 상실될 수 있습니다.</strong>
+            <strong style="font-size: 14px;"><i class="fas fa-trophy" style="color: #000000; margin-right: 5px;"></i>모든
+              사용자는 항상 클럽 내 규칙 및 표준에 따라야 합니다.<br>
+              <span style="margin-left: 24px;">위 규칙 위반 시 회원권 권한이 상실될 수 있습니다.</span></strong>
           </p>
         </div>
         <div style="flex: 1;">
           <p class="terms" style="margin-bottom: 2px;"><strong>환불안내</strong></p>
           <hr style="margin: 5px 0;">
-          <p class="terms"
-            style="margin-bottom: 15px; border: 2px solid #ccc; padding: 8px; display: inline-block; width: 450px;">회원권
-            1일 5,000원 | 무료PT 50,000원 | GX 30,000원</p>
+          <div
+            style="position: relative; margin-top: 10px; margin-bottom: 15px; border: 3px solid #333; padding: 10.5px; display: inline-block; width: 450px;">
+            <span
+              style="position: absolute; top: -10px; left: 10px; background: white; padding: 0 5px; font-size: 12px; font-weight: bold;">서비스
+              정상가격</span>
+            <p class="terms" style="margin: 0; font-weight: bold;">회원권 1일 5,000원 | 무료PT 50,000원 | GX 30,000원</p>
+          </div>
           <p class="terms">1. 이용 개시일 전에는 위약금 10%가 공제됩니다.<br>
             2. 이용 개시일 후에는 위약금 10% + 소요기간 정상가격이 공제됩니다.<br>
             3. 가입시 서비스로 제공되는 기간, 시설, 레슨, 사은품 등은 환불 요청시<br>&nbsp;&nbsp;&nbsp;&nbsp;상품가치에 해당하는 금액이 공제됩니다.<br>
@@ -367,61 +423,75 @@
       </div>
 
       <div class="section signbox">
-        <p style="font-weight: bold; font-size: 14px;">본인은 위 계약내용을 모두 이해 하였고, 이에 동의하였습니다. 또한 본인 자필로 서명한 회원가입계약서 사본을 교부
-          받았음을 인정합니다.
-
-            <div class="sign-date">
-              <p><select class="year" id="yearInput"></select> 년 
-                 <select class="month" id="monthInput"></select> 월 
-                 <select class="day" id="dayInput"></select> 일</p>
-            </div>
-            <div>
-              <p style="margin: -30px 200px 5px 0; text-align: right;">신청인</p>
-              <canvas id="jsCanvas" class="canvas thisbox" style="margin: 0;"></canvas>
-            </div>
-          </div>
+        <p style="font-weight: bold; font-size: 14px;">본인은 위 계약내용을 모두 
+          <span class="dictation-text" data-canvas="canvas1">모두 이해</span> 하였고, 
+          <span class="dictation-text" data-canvas="canvas2">이에 동의</span>하였습니다. 또한 본인 자필로 서명한 회원가입계약서 사본을 교부 받았음을 
+          <span class="dictation-text" data-canvas="canvas3">인정</span>합니다.</p>
+        <div class="dictation-overlay" id="overlay1">
+          <canvas id="canvas1" class="dictation-canvas"></canvas>
+          <button class="close-btn">✕</button>
         </div>
-        <script src="./canvas.js"></script>
+        <div class="dictation-overlay" id="overlay2">
+          <canvas id="canvas2" class="dictation-canvas"></canvas>
+          <button class="close-btn">✕</button>
+        </div>
+        <div class="dictation-overlay" id="overlay3">
+          <canvas id="canvas3" class="dictation-canvas"></canvas>
+          <button class="close-btn">✕</button>
+        </div>
+        <div class="sign-date">
+          <p><select class="year" id="yearInput"></select> 년
+            <select class="month" id="monthInput"></select> 월
+            <select class="day" id="dayInput"></select> 일
+          </p>
+        </div>
+        <div>
+          <p style="margin: -30px 200px 5px 0; text-align: right;">신청인</p>
+          <canvas id="jsCanvas" class="canvas thisbox" style="margin: 0;"></canvas>
+        </div>
       </div>
-      <script>
-        // Set today's date and populate select boxes
-        const today = new Date();
-        const yearSelect = document.getElementById('yearInput');
-        const monthSelect = document.getElementById('monthInput');
-        const daySelect = document.getElementById('dayInput');
+  </div>
+  <script src="./canvas.js"></script>
+  </div>
+  <script>
+    // Set today's date and populate select boxes
+    const today = new Date();
+    const yearSelect = document.getElementById('yearInput');
+    const monthSelect = document.getElementById('monthInput');
+    const daySelect = document.getElementById('dayInput');
 
-        // Populate year select (current year to 2025)
-        const currentYear = today.getFullYear();
-        for (let year = currentYear; year <= 2025; year++) {
-          const option = document.createElement('option');
-          option.value = year.toString();
-          option.text = year.toString();
-          yearSelect.appendChild(option);
-        }
+    // Populate year select (current year to 2025)
+    const currentYear = today.getFullYear();
+    for (let year = currentYear; year <= 2025; year++) {
+      const option = document.createElement('option');
+      option.value = year.toString();
+      option.text = year.toString();
+      yearSelect.appendChild(option);
+    }
 
-        // Populate month select (1-12)
-        for (let i = 1; i <= 12; i++) {
-          const option = document.createElement('option');
-          option.value = i.toString().padStart(2, '0');
-          option.text = i.toString().padStart(2, '0');
-          monthSelect.appendChild(option);
-        }
+    // Populate month select (1-12)
+    for (let i = 1; i <= 12; i++) {
+      const option = document.createElement('option');
+      option.value = i.toString().padStart(2, '0');
+      option.text = i.toString().padStart(2, '0');
+      monthSelect.appendChild(option);
+    }
 
-        // Populate day select (1-31)
-        for (let i = 1; i <= 31; i++) {
-          const option = document.createElement('option');
-          option.value = i.toString().padStart(2, '0');
-          option.text = i.toString().padStart(2, '0');
-          daySelect.appendChild(option);
-        }
+    // Populate day select (1-31)
+    for (let i = 1; i <= 31; i++) {
+      const option = document.createElement('option');
+      option.value = i.toString().padStart(2, '0');
+      option.text = i.toString().padStart(2, '0');
+      daySelect.appendChild(option);
+    }
 
-        // Set default values to today
-        yearSelect.value = today.getFullYear().toString();
-        monthSelect.value = (today.getMonth() + 1).toString().padStart(2, '0');
-        daySelect.value = today.getDate().toString().padStart(2, '0');
-      </script>
-      <p><button type="button" onclick="downloadAsImage()" class="submitBtn">가입완료</button></p>
-    </form>
+    // Set default values to today
+    yearSelect.value = today.getFullYear().toString();
+    monthSelect.value = (today.getMonth() + 1).toString().padStart(2, '0');
+    daySelect.value = today.getDate().toString().padStart(2, '0');
+  </script>
+  <p><button type="button" onclick="downloadAsImage()" class="submitBtn">가입완료</button></p>
+  </form>
   </div>
 </body>
 
